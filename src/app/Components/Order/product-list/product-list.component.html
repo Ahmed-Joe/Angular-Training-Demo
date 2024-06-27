@@ -1,0 +1,99 @@
+<div class="mb-3">
+  <label for="prdCat" class="form-label">Category:</label>
+  <select
+    class="form-select form-select-lg"
+    name="cat"
+    id="prdCat"
+    [(ngModel)]="selectedCategoryID"
+  >
+    <option [value]="cat.id" *ngFor="let cat of catList">{{ cat.name }}</option>
+  </select>
+</div>
+<div>
+  [To Be Removed] for test: {{ selectedCategoryID }}
+  <br />
+  Today's Date: {{ orderDate | date : "short" }}
+</div>
+<hr />
+<div class="table-responsive">
+  <table class="table">
+    <thead class="bg-dark">
+      <tr style="text-align: center">
+        <th>NO.</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Av. Quantity</th>
+        <th>Price in USD</th>
+        <th>Price in EGP</th>
+        <th>Count</th>
+        <th>Buy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- *ngFor="let prd of prdList; let i = indexindex as i" -->
+      <!-- trackBy used to specify iterable objects identity,
+       and enhance the performance of ngFor in case of changes of the collection
+       ,and update the changed object, without re-build the DOM -->
+      <!-- <tr
+        *ngFor="let prd of prdList; let i = index; trackBy: prdTrackByFn"
+        [class.d-none]="selectedCategoryID != prd.categoryID"
+        style="vertical-align: middle; text-align: center"
+        [style.background-color]="prd.quantity == 0 ? 'yellow' : 'lightgray'"
+      > -->
+      <!-- <tr
+        *ngFor="let prd of prdList; let i = index"
+        style="vertical-align: middle; text-align: center"
+        [hidden]="prd.quantity==0"
+      > -->
+      <!--
+      1- ngIf change in DOM => used if no much change in DOM in runtime
+      2- class binding or [hiddin] change the DOM element only => used if there is a lot of changes in DOM in runtime
+      3- ng-container used when we need to use 2 ng-module as work around
+      -->
+      <!-- <ng-container *ngFor="let prd of prdList; let i = index"> -->
+      <!-- <tr
+          *ngIf="prd.quantity != 0"
+          style="vertical-align: middle; text-align: center"
+        > -->
+      <tr
+        *ngFor="let prd of prdList; let i = index"
+        style="vertical-align: middle; text-align: center"
+      >
+        <!-- safe navigation operator -->
+        <td>{{ i + 1 }}</td>
+        <td>{{ prd.name }}</td>
+        <!-- <td><img LightBox highLightColor="red" [src]="prd.imgURL" alt="" /></td> -->
+        <td>
+          <img LightBox="red" defaultColor="gray" [src]="prd.imgURL" alt="" />
+        </td>
+        <!-- <td><img [LightBox]="ReadProbertyFromTS" [src]="prd.imgURL" alt="" /></td> -->
+        <td>
+          <!-- <div *ngIf="prd.quantity != 0; else outOfStock">{{ prd.quantity }}</div>
+          <ng-template #outOfStock> Out Of Stock </ng-template> -->
+          <ng-conatiner [ngSwitch]="prd.quantity">
+            <div *ngSwitchCase="0">Out Of Stock</div>
+            <div *ngSwitchCase="1">Last Item</div>
+            <div *ngSwitchCase="2">Last 2 Items</div>
+            <div *ngSwitchDefault>{{ prd.quantity }}</div>
+          </ng-conatiner>
+        </td>
+        <td>{{ prd.price | currency:'USD':'symbol' }}</td>
+        <td>{{ prd.price | USDtoEGP | currency:'EGP':'code'}}</td>
+        <!-- Template Variable -->
+        <td><input #itemsCount type="number" class="form-control" /></td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="buy(prd.price, itemsCount.value)"
+          >
+            Buy
+          </button>
+        </td>
+      </tr>
+      <!-- </ng-container> -->
+    </tbody>
+  </table>
+</div>
+<hr />
+<h3>Order Total Price: {{ orderTotalPrice }}</h3>
