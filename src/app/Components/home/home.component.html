@@ -1,0 +1,13 @@
+<!-- property binding -->
+<img *ngIf="isImgShown" [src]="storeInfo.img" alt="image" class="img-fluid" />
+<button type="button" class="btn btn-primary" (click)="toggelImage()">
+  toggel image
+</button>
+
+<!-- interpolation binding -->
+<H1>{{ storeInfo.name }}</H1>
+
+<h3>our branches</h3>
+<ul>
+  <li *ngFor="let item of storeInfo.branches">{{ item }}</li>
+</ul>
