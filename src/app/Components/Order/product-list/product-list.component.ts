@@ -1,4 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterContentInit,
+  AfterViewChecked,
+  Component,
+  DoCheck,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChildren,
+  viewChild,
+  viewChildren,
+} from '@angular/core';
 import { Iproduct } from '../../../Models/iproduct';
 import { ICategory } from '../../../Models/icategory';
 
@@ -7,18 +22,22 @@ import { ICategory } from '../../../Models/icategory';
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
-export class ProductListComponent implements OnInit {
-  catList: ICategory[];
+export class ProductListComponent implements OnChanges {
   prdList: Iproduct[];
+  prdListOfCat: Iproduct[] = [];
+  @Input() sentCatID: number = 0;
+  @Output() totalPriceChanged: EventEmitter<number>;
   orderTotalPrice: number = 0;
-  selectedCategoryID: number = 0;
   orderDate: Date;
+  // selectedCatID: number = 0;
+  // catList: ICategory[];
   constructor() {
-    this.catList = [
-      { id: 1, name: 'Laptops' },
-      { id: 2, name: 'Tablets' },
-      { id: 3, name: 'Mobiles' },
-    ];
+    this.totalPriceChanged = new EventEmitter<number>();
+    // this.catList = [
+    //   { id: 1, name: 'Laptops' },
+    //   { id: 2, name: 'Tablets' },
+    //   { id: 3, name: 'Mobiles' },
+    // ];
     this.prdList = [
       {
         id: 100,
@@ -69,9 +88,9 @@ export class ProductListComponent implements OnInit {
         categoryID: 3,
       },
     ];
+    this.prdListOfCat = this.prdList;
     this.orderDate = new Date();
   }
-  ngOnInit(): void {}
 
   prdTrackByFn(index: number, prd: Iproduct): number {
     return prd.id;
@@ -83,6 +102,18 @@ export class ProductListComponent implements OnInit {
     // this.orderTotalPrice = parseInt(count) * prdPrice;
     // this.orderTotalPrice = Number(count) * prdPrice;
     // this.orderTotalPrice = (count as number) * prdPrice;
-    this.orderTotalPrice = +count * prdPrice;
+    this.orderTotalPrice += +count * prdPrice;
+    //Excute the event
+    this.totalPriceChanged.emit(this.orderTotalPrice);
+  }
+  private filterProductsByCatID() {
+    if (this.sentCatID == 0) this.prdListOfCat = this.prdList;
+    else
+      this.prdListOfCat = this.prdList.filter(
+        (prd) => prd.categoryID == this.sentCatID
+      );
+  }
+  ngOnChanges(): void {
+    this.filterProductsByCatID();
   }
 }

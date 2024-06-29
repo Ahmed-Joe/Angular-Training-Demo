@@ -1,19 +1,20 @@
-<div class="mb-3">
+<!-- <div class="mb-3">
   <label for="prdCat" class="form-label">Category:</label>
   <select
     class="form-select form-select-lg"
     name="cat"
     id="prdCat"
-    [(ngModel)]="selectedCategoryID"
+    [(ngModel)]="sentCatID"
+    (change)="filterProductsByCatID()"
   >
     <option [value]="cat.id" *ngFor="let cat of catList">{{ cat.name }}</option>
   </select>
-</div>
-<div>
+</div> -->
+<!-- <div>
   [To Be Removed] for test: {{ selectedCategoryID }}
   <br />
   Today's Date: {{ orderDate | date : "short" }}
-</div>
+</div> -->
 <hr />
 <div class="table-responsive">
   <table class="table">
@@ -32,8 +33,8 @@
     <tbody>
       <!-- *ngFor="let prd of prdList; let i = indexindex as i" -->
       <!-- trackBy used to specify iterable objects identity,
-       and enhance the performance of ngFor in case of changes of the collection
-       ,and update the changed object, without re-build the DOM -->
+      and enhance the performance of ngFor in case of changes of the collection
+      ,and update the changed object, without re-build the DOM -->
       <!-- <tr
         *ngFor="let prd of prdList; let i = index; trackBy: prdTrackByFn"
         [class.d-none]="selectedCategoryID != prd.categoryID"
@@ -56,7 +57,7 @@
           style="vertical-align: middle; text-align: center"
         > -->
       <tr
-        *ngFor="let prd of prdList; let i = index"
+        *ngFor="let prd of prdListOfCat; let i = index"
         style="vertical-align: middle; text-align: center"
       >
         <!-- safe navigation operator -->
@@ -77,8 +78,8 @@
             <div *ngSwitchDefault>{{ prd.quantity }}</div>
           </ng-conatiner>
         </td>
-        <td>{{ prd.price | currency:'USD':'symbol' }}</td>
-        <td>{{ prd.price | USDtoEGP | currency:'EGP':'code'}}</td>
+        <td>{{ prd.price | currency : "USD" : "symbol" }}</td>
+        <td>{{ prd.price | USDtoEGP | currency : "EGP" : "code" }}</td>
         <!-- Template Variable -->
         <td><input #itemsCount type="number" class="form-control" /></td>
         <td>
@@ -95,5 +96,6 @@
     </tbody>
   </table>
 </div>
-<hr />
+<!-- <hr />
 <h3>Order Total Price: {{ orderTotalPrice }}</h3>
+<h3>sentCatID: {{ sentCatID }}</h3> -->
