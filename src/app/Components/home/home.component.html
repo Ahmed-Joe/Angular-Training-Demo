@@ -1,6 +1,11 @@
 <!-- property binding -->
-<img *ngIf="isImgShown" [src]="storeInfo.img" alt="image" class="img-fluid" />
-<button type="button" class="btn btn-primary" (click)="toggelImage()">
+<img
+  *ngIf="isImgShown"
+  [src]="storeInfo.img"
+  alt="image"
+  class="img-fluid my-3"
+/>
+<button type="button" class="btn btn-primary mx-3" (click)="toggelImage()">
   toggel image
 </button>
 

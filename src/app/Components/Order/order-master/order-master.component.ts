@@ -42,6 +42,6 @@ export class OrderMasterComponent implements AfterViewInit {
     this.receivedOrderTotalPrice = totalPrice;
   }
   completeOrder() {
-    this.prdListCompObj.prdList[0].quantity -= 1;
+    // this.prdListCompObj.prdList[0]
   }
 }
