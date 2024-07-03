@@ -50,11 +50,22 @@
         </li>
         <li class="nav-item">
           <a
+            [hidden]="isUserLogged"
             class="nav-link"
             href="#"
             routerLink="/Login"
             routerLinkActive="active"
             >Login</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            [hidden]="!isUserLogged"
+            class="nav-link"
+            href="#"
+            routerLink="/Logout"
+            routerLinkActive="active"
+            >Logout</a
           >
         </li>
       </ul>

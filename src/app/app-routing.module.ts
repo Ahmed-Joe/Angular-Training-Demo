@@ -8,6 +8,7 @@ import { NotFoundComponentComponent } from './Components/NotFoundComponent/NotFo
 import { UserLoginComponent } from './Components/UserLogin/UserLogin.component';
 import { MainLayoutComponent } from './Components/MainLayout/MainLayout.component';
 import { ProductDetailsComponent } from './Components/product-details/product-details.component';
+import { AuthGuard } from './Guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -19,11 +20,16 @@ const routes: Routes = [
       { path: 'Products', component: ProductListComponent },
       { path: 'Products/:pid', component: ProductDetailsComponent },
       // { path: 'Products/:pid', component: ProductDetailsComponent },
-      { path: 'Order', component: OrderMasterComponent },
+      {
+        path: 'Order',
+        component: OrderMasterComponent,
+        canActivate: [AuthGuard],
+      },
     ],
   },
 
   { path: 'Login', component: UserLoginComponent },
+  { path: 'Logout', component: UserLoginComponent },
   { path: '**', component: NotFoundComponentComponent }, // Wild Card Path
 ];
 
