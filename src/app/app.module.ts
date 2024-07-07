@@ -19,6 +19,8 @@ import { UserLoginComponent } from './Components/UserLogin/UserLogin.component';
 import { NotFoundComponentComponent } from './Components/NotFoundComponent/NotFoundComponent.component';
 import { MainLayoutComponent } from './Components/MainLayout/MainLayout.component';
 import { ProductDetailsComponent } from './Components/product-details/product-details.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AddProductComponent } from './Components/add-product/add-product.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +37,9 @@ import { ProductDetailsComponent } from './Components/product-details/product-de
     NotFoundComponentComponent,
     MainLayoutComponent,
     ProductDetailsComponent,
+    AddProductComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],
 })

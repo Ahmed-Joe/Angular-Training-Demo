@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 // import { Router } from 'express';
 import { Router } from '@angular/router';
 import { arrayBuffer } from 'stream/consumers';
+import { ProductsService } from '../../Services/products.service';
 
 @Component({
   selector: 'app-product-details',
@@ -13,9 +14,9 @@ import { arrayBuffer } from 'stream/consumers';
   styleUrl: './product-details.component.scss',
 })
 export class ProductDetailsComponent implements OnInit {
-  currPrdID: number = 0;
+  currPrdID: string = '';
   prd: Iproduct | null = null;
-  prdIDsArr: number[] = [];
+  prdIDsArr: string[] = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -33,7 +34,7 @@ export class ProductDetailsComponent implements OnInit {
     // When Navigate To The Same Component, WILL NOT Reload Component
     // Even If There Is Chanes In The Route Parameters.
     this.activatedRoute.paramMap.subscribe((paramMap) => {
-      this.currPrdID = Number(paramMap.get('pid'));
+      this.currPrdID = String(paramMap.get('pid'));
       this.prd = this.prdService.getProductByID(this.currPrdID);
     });
   }

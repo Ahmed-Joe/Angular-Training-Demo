@@ -12,6 +12,8 @@ import { Iproduct } from '../../../Models/iproduct';
 import { ICategory } from '../../../Models/icategory';
 import { StaticProductsService } from '../../../Services/static-products.service';
 import { Router } from '@angular/router';
+import { ProductsService } from '../../../Services/products.service';
+import { subscribe } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-product-list',
@@ -28,7 +30,8 @@ export class ProductListComponent implements OnChanges, OnInit {
   // selectedCatID: number = 0;
   // catList: ICategory[];
   constructor(
-    private staticPrdService: StaticProductsService,
+    private prdService: ProductsService,
+    // private staticPrdService: StaticProductsService,
     private router: Router
   ) {
     this.totalPriceChanged = new EventEmitter<number>();
@@ -90,11 +93,8 @@ export class ProductListComponent implements OnChanges, OnInit {
     // this.prdListOfCat = this.prdList;
     this.orderDate = new Date();
   }
-  ngOnInit(): void {
-    this.prdListOfCat = this.staticPrdService.getAllProducts();
-  }
 
-  prdTrackByFn(index: number, prd: Iproduct): number {
+  prdTrackByFn(index: number, prd: Iproduct): string {
     return prd.id;
   }
 
@@ -123,8 +123,17 @@ export class ProductListComponent implements OnChanges, OnInit {
   // }
   ngOnChanges(): void {
     // this.filterProductsByCatID();
-    this.prdListOfCat = this.staticPrdService.getProductsByCatID(
-      this.sentCatID
-    );
+    // this.prdListOfCat = this.staticPrdService.getProductsByCatID(
+    // this.sentCatID
+    // );
+    this.prdService.getProductsByCatID(this.sentCatID).subscribe((Products) => {
+      this.prdListOfCat = Products;
+    });
+  }
+  ngOnInit(): void {
+    // this.prdListOfCat = this.staticPrdService.getAllProducts();
+    this.prdService.getAllProducts().subscribe((Products) => {
+      this.prdListOfCat = Products;
+    });
   }
 }

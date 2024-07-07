@@ -1,0 +1,86 @@
+<!-- <button type="button" class="btn btn-secondary" (click)="addProduct()">
+  Save
+</button> -->
+
+<div class="text-danger">
+  <h3>To Be Removed [For Test]:</h3>
+  <div>{{ newPrd | json }}</div>
+  <!-- <div>{{ pdrNameInp.className | json }}</div> -->
+</div>
+
+<hr />
+<form #prdform="ngForm" (ngSubmit)="addProduct()">
+  <div class="mb-3 me-3">
+    <label for="pName">Product Name</label>
+    <input
+      #pdrNameInp="ngModel"
+      type="text"
+      class="form-control"
+      id="pName"
+      name="prdName"
+      [(ngModel)]="newPrd.name"
+      required
+      pattern="[a-zA-Z]{3,30}"
+    />
+    <div
+      [hidden]="pdrNameInp.valid || pdrNameInp.untouched"
+      class="alert alert-warning"
+    >
+      <small *ngIf="pdrNameInp.errors?.['required']">Name is required</small>
+      <br />
+      <small *ngIf="pdrNameInp.errors?.['pattern']"
+        >Name must be 3 letters at least</small
+      >
+    </div>
+  </div>
+  <div class="mb-3 me-3">
+    <label for="pPrice">Product Price</label>
+    <input
+      type="number"
+      class="form-control"
+      id="pPrice"
+      name="prdPrice"
+      [(ngModel)]="newPrd.price"
+    />
+  </div>
+  <div class="mb-3 me-3">
+    <label for="pQuantity">Product Quantity</label>
+    <input
+      type="number"
+      class="form-control"
+      id="pQuantity"
+      name="prdQuantity"
+      [(ngModel)]="newPrd.quantity"
+    />
+  </div>
+
+  <div class="mb-3 me-3">
+    <label for="pCategory">Product Category</label>
+    <select
+      class="form-select form-select-lg"
+      name="cat"
+      id="prdCat"
+      name="prdCategory"
+      [(ngModel)]="newPrd.categoryID"
+    >
+      <option value="0" selected>All</option>
+      <option [value]="cat.id" *ngFor="let cat of catList">
+        {{ cat.name }}
+      </option>
+    </select>
+  </div>
+  <div class="mb-3 me-3">
+    <label for="pImg">Product Image</label>
+    <input
+      type="file"
+      class="form-control"
+      id="pImg"
+      name="prdImg"
+      [(ngModel)]="newPrd.imgURL"
+    />
+  </div>
+
+  <button [disabled]="prdform.invalid" type="submit" class="btn btn-primary">
+    Submit
+  </button>
+</form>

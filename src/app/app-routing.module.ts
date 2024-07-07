@@ -9,6 +9,7 @@ import { UserLoginComponent } from './Components/UserLogin/UserLogin.component';
 import { MainLayoutComponent } from './Components/MainLayout/MainLayout.component';
 import { ProductDetailsComponent } from './Components/product-details/product-details.component';
 import { AuthGuard } from './Guards/auth.guard';
+import { AddProductComponent } from './Components/add-product/add-product.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'Home', component: HomeComponent },
       { path: 'Products', component: ProductListComponent },
       { path: 'Products/:pid', component: ProductDetailsComponent },
+      { path: 'Product/Add', component: AddProductComponent },
       // { path: 'Products/:pid', component: ProductDetailsComponent },
       {
         path: 'Order',
